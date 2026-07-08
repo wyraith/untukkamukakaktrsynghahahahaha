@@ -199,11 +199,11 @@
     <div class="glass-card" id="main-card">
         <div class="gif-container">
             <!-- HALAMAN 1: Kucing Minta Maaf Nangis Memelas -->
-            <img id="cat-gif" src="https://media.tenor.com/Z8izCgA4OygAAAAi/peach-goma-apologize.gif" alt="Cute cat crying">
+            <img id="cat-gif" src="pp.png" alt="Cute cat crying">
         </div>
         
         <h1 id="title">Maafin Aku Ya? 🥺</h1>
-        <p id="desc">Aku beneran nyesel deh. Jangan ngambek terus dong, cantiknya/gantengnya nanti luntur. Baikan yuk? 👉👈</p>
+        <p id="desc">maaff ya kakak aku jahat banget ke kakak 👉👈</p>
         
         <div class="btn-container">
             <button id="btn-yes" onclick="dimaafin()">Iyaaa</button>
@@ -263,11 +263,11 @@
         // --- LOGIKA SAAT DIMA'AFKAN (HALAMAN 2) ---
         function dimaafin() {
             // HALAMAN 2: Otomatis ganti ke GIF Kucing Pelukan Senang Saling Sayang
-            document.getElementById('cat-gif').src = "https://media.tenor.com/6Xy1Dq8G8B8AAAAi/peach-and-goma-peach-goma.gif";
+            document.getElementById('cat-gif').src = "pp2.png";
             
             // Ganti Teks Sambutan Sukses
             document.getElementById('title').innerText = "YAYYY! MAKASIHH! 🥰";
-            document.getElementById('desc').innerText = "Hehehe sayang kamu banyak-banyak! Gak bakal diulangin lagi deh janjii 🤞❤️";
+            document.getElementById('desc').innerText = "hehehe kakak baik dehh 🤞❤️";
             
             // Hilangkan Tombol Pilihan (Iya/Gak)
             document.querySelector('.btn-container').classList.add('hidden');
@@ -313,10 +313,10 @@
         // --- LOGIKA TOMBOL LANJUTAN DITEKAN (HALAMAN 3) ---
         function lanjutCerita() {
             // HALAMAN 3: Otomatis ganti ke GIF Kucing Manja Ndusel-Ndusel dengerin cerita
-            document.getElementById('cat-gif').src = "https://media.tenor.com/XDHXw6b9v9gAAAAi/peach-goma-cat.gif";
+            document.getElementById('cat-gif').src = "pp3.png";
 
-            document.getElementById('title').innerText = "Dengerin Dulu.. 🥺";
-            document.getElementById('desc').innerText = "Jadi tuh sebenernya kemarin aku gini blablabla... Intinya aku gak ada maksud bikin kamu kesel kok. Jangan ngambek lagi ya manis? ❤️";
+            document.getElementById('title').innerText = "Aku Mau Cerita Nihh 🥰";
+            document.getElementById('desc').innerText = "kak, jujur aku nyaman sama kakak. aku suka dan sayang pake bgt (walaupun suka bikin nangis kk hh). aku tau ko kak emg sesayang dan sesuka itu sama aku, sampe2 masih bertahan hehe. kayanya aku belum mau pacaran dulu hehe, aku cuma mau jalanin pelan-pelan aja, kenal lebih jauh, tanpa harus buru-buru. semoga kakak ngerti ya :). maaf ya kak aku selalu nyakitin perasaan kakak , kalo ga dimaapin gapapa si emg jahat akunya wkwk. mwah ❤️";
             
             // Hilangkan tombol setelah ditekan agar bersih
             document.getElementById('btn-next').classList.add('hidden');
