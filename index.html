@@ -25,8 +25,9 @@
             background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a18cd1, #fbc2eb);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            overflow: hidden;
+            overflow-x: hidden; /* Mencegah scroll horizontal jika tombol kabur ke pinggir */
             position: relative;
+            padding: 20px; /* Jarak aman agar kartu tidak nempel ke pinggir layar HP */
         }
 
         @keyframes gradientBG {
@@ -64,14 +65,25 @@
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 30px;
-            padding: 40px 30px;
+            padding: 30px 20px; /* Sedikit diperkecil untuk HP */
             text-align: center;
-            width: 90%;
-            max-width: 450px;
+            width: 100%;
+            max-width: 420px;
+            max-height: 90vh; /* Agar tidak melebihi tinggi layar ponsel pintar */
+            overflow-y: auto; /* Jika teks kepanjangan di HP pendek, kartu bisa di-scroll internal */
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
             z-index: 10;
             transition: transform 0.3s ease;
             animation: floatUpIn 1s ease-out forwards;
+        }
+
+        /* Menyembunyikan scrollbar bawaan untuk tampilan estetik */
+        .glass-card::-webkit-scrollbar {
+            width: 4px;
+        }
+        .glass-card::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
         }
 
         .glass-card:hover {
@@ -82,7 +94,7 @@
             margin-bottom: 20px;
             overflow: hidden;
             border-radius: 15px;
-            min-height: 200px;
+            min-height: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -91,7 +103,7 @@
         .gif-container img {
             width: 100%; 
             height: auto; 
-            max-width: 220px; 
+            max-width: 180px; /* Dioptimalkan ukurannya agar seimbang di HP */
             border-radius: 15px;
             pointer-events: none;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
@@ -100,7 +112,7 @@
 
         h1 {
             color: #fff;
-            font-size: 2.2rem;
+            font-size: 1.8rem; /* Sedikit diperkecil agar tidak pecah jadi 3 baris di HP */
             font-weight: 900;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
@@ -109,21 +121,22 @@
 
         p {
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
 
         .story-text {
-            font-size: 1.05rem !important;
+            font-size: 0.95rem !important; /* Ukuran teks cerita disesuaikan agar nyaman dibaca di HP */
             line-height: 1.6;
             text-align: justify;
             margin-bottom: 20px;
+            padding: 0 5px;
         }
 
         .closing-text {
-            font-size: 1.4rem !important;
+            font-size: 1.3rem !important;
             font-weight: 900;
             color: #fff;
             display: block;
@@ -136,12 +149,13 @@
             justify-content: center;
             gap: 15px;
             position: relative;
+            min-height: 50px; /* Menjaga space tombol tetap aman */
         }
 
         button {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 800;
-            padding: 12px 30px;
+            padding: 12px 25px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -153,18 +167,18 @@
         #btn-yes {
             background-color: #fff;
             color: #ff4757;
-            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.3), 0 4px 0 #e2e2e2;
+            box-shadow: 0 6px 12px rgba(255, 255, 255, 0.3), 0 3px 0 #e2e2e2;
         }
 
         #btn-yes:active {
-            transform: translateY(4px);
+            transform: translateY(3px);
             box-shadow: 0 2px 5px rgba(255, 255, 255, 0.3), 0 0 0 #e2e2e2;
         }
 
         #btn-no {
             background-color: #ff4757;
             color: #fff;
-            box-shadow: 0 8px 15px rgba(255, 71, 87, 0.4), 0 4px 0 #d63031;
+            box-shadow: 0 6px 12px rgba(255, 71, 87, 0.4), 0 3px 0 #d63031;
             position: relative; 
             z-index: 100;
         }
@@ -172,14 +186,14 @@
         #btn-next {
             background-color: #4cd137;
             color: #fff;
-            box-shadow: 0 8px 15px rgba(76, 209, 55, 0.4), 0 4px 0 #44bd32;
+            box-shadow: 0 6px 12px rgba(76, 209, 55, 0.4), 0 3px 0 #44bd32;
             display: inline-block;
             margin-top: 10px;
             animation: pulse 1.5s infinite;
         }
 
         #btn-next:active {
-            transform: translateY(4px);
+            transform: translateY(3px);
             box-shadow: 0 2px 5px rgba(76, 209, 55, 0.3), 0 0 0 #44bd32;
         }
 
@@ -194,8 +208,15 @@
         }
 
         @keyframes floatUpIn {
-            0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Responsivitas Layar Sangat Kecil (Contoh: Jaringan HP Jadul / Lipat) */
+        @media (max-width: 360px) {
+            h1 { font-size: 1.5rem; }
+            button { font-size: 0.9rem; padding: 10px 20px; }
+            .gif-container img { max-width: 150px; }
         }
     </style>
 </head>
@@ -239,16 +260,16 @@
         function createFloatingEmoji() {
             const container = document.getElementById('emoji-container');
             const emojis = ['🥺', '🙏', '😭', '💔'];
-            const emojiCount = 15;
+            const emojiCount = 10; // Dikurangi sedikit agar tidak terlalu berat di HP beban ram kecil
 
             for (let i = 0; i < emojiCount; i++) {
                 const emoji = document.createElement('div');
                 emoji.className = 'emoji-bg';
                 emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                emoji.style.left = Math.random() * 100 + 'vw';
-                emoji.style.fontSize = (Math.random() * 1.5 + 2) + 'rem';
+                emoji.style.left = Math.random() * 90 + 'vw'; /* Menghindari overflow kanan luar layar */
+                emoji.style.fontSize = (Math.random() * 1 + 1.8) + 'rem';
                 emoji.style.animationDuration = (Math.random() * 5 + 8) + 's';
-                emoji.style.animationDelay = (Math.random() * 10) + 's';
+                emoji.style.animationDelay = (Math.random() * 8) + 's';
                 container.appendChild(emoji);
             }
         }
@@ -270,8 +291,9 @@
             const btnWidth = btnNo.offsetWidth;
             const btnHeight = btnNo.offsetHeight;
             
-            const randomX = Math.floor(Math.random() * (screenWidth - btnWidth));
-            const randomY = Math.floor(Math.random() * (screenHeight - btnHeight));
+            // Memberikan padding batas aman sebesar 20px dari pinggiran layar asli HP agar tombol tidak hilang total
+            const randomX = Math.floor(Math.random() * (screenWidth - btnWidth - 40)) + 20;
+            const randomY = Math.floor(Math.random() * (screenHeight - btnHeight - 40)) + 20;
             
             btnNo.style.left = randomX + 'px';
             btnNo.style.top = randomY + 'px';
@@ -298,21 +320,21 @@
                 el.style.animationDuration = '4s';
             });
 
-            var duration = 3 * 1000;
+            var duration = 2.5 * 1000;
             var end = Date.now() + duration;
 
             (function frame() {
                 confetti({
-                    particleCount: 5,
+                    particleCount: 3,
                     angle: 60,
-                    spread: 55,
+                    spread: 45,
                     origin: { x: 0 },
                     colors: ['#ff9a9e', '#fecfef', '#ffffff', '#ff4757']
                 });
                 confetti({
-                    particleCount: 5,
+                    particleCount: 3,
                     angle: 120,
-                    spread: 55,
+                    spread: 45,
                     origin: { x: 1 },
                     colors: ['#ff9a9e', '#fecfef', '#ffffff', '#ff4757']
                 });
@@ -331,10 +353,8 @@
             const descEl = document.getElementById('desc');
             descEl.classList.add('story-text');
             
-            // Teks cerita tanpa penutup langsung agar tombol Penutupan di bawahnya pas
             descEl.innerHTML = "kak, jujur aku nyaman sama kakak. aku suka dan sayang pake bgt (walaupun suka bikin nangis kk hh). aku tau ko kak emg sesayang dan sesuka itu sama aku, sampe2 masih bertahan hehe. aku cuma mau jalanin pelan-pelan aja, kenal lebih jauh, tanpa harus buru-buru kak. semoga kakak ngerti ya :). maaf ya kak aku selalu nyakitin perasaan kakak , kalo ga dimaapin gapapa si emg jahat akunya wkwk.";
             
-            // Mengubah tombol menjadi tombol "Penutupan"
             const btnNext = document.getElementById('btn-next');
             btnNext.innerText = "Penutupan";
             btnNext.setAttribute('onclick', 'penutupan()');
@@ -342,32 +362,30 @@
 
         // --- HALAMAN 4 (Penutupan Akhir) ---
         function penutupan() {
-            document.getElementById('cat-gif').src = "pp2.png"; // Bisa kamu ganti nama file gambarnya jika ada khusus penutupan
+            document.getElementById('cat-gif').src = "pp2.png"; 
             document.getElementById('title').innerText = "Daaa Kakak! 👋❤️";
             
             const descEl = document.getElementById('desc');
             descEl.classList.remove('story-text');
             descEl.innerHTML = "Makasih banyak ya udah mau luangin waktunya hehe. <br><span class='closing-text'>mwah ❤️</span>";
             
-            // Sembunyikan tombol penutupan karena sudah di akhir halaman
             document.getElementById('btn-next').classList.add('hidden');
 
-            // Kasih efek selebrasi confetti penutup
-            var duration = 3 * 1000;
+            var duration = 2.5 * 1000;
             var end = Date.now() + duration;
 
             (function frame() {
                 confetti({
-                    particleCount: 6,
+                    particleCount: 4,
                     angle: 60,
-                    spread: 60,
+                    spread: 50,
                     origin: { x: 0 },
                     colors: ['#ff9a9e', '#fecfef', '#ffffff', '#ff4757']
                 });
                 confetti({
-                    particleCount: 6,
+                    particleCount: 4,
                     angle: 120,
-                    spread: 60,
+                    spread: 50,
                     origin: { x: 1 },
                     colors: ['#ff9a9e', '#fecfef', '#ffffff', '#ff4757']
                 });
