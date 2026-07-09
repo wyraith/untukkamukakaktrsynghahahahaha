@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FIX: Baris di bawah ini berfungsi agar gambar dari Tenor tidak diblokir browser -->
     <meta name="referrer" content="no-referrer">
     
     <title>Maafin Aku Ya? 🥺</title>
@@ -18,7 +17,6 @@
             font-family: 'Nunito', sans-serif;
         }
 
-        /* Container Utama dengan Background Bergerak */
         body {
             min-height: 100vh;
             display: flex;
@@ -37,7 +35,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* EMOJI MELAYANG (SEDIH/MEMOHON) */
         .emoji-bg {
             position: absolute;
             font-size: 2.5rem;
@@ -61,7 +58,6 @@
             }
         }
 
-        /* Desain Glassmorphism (Kaca) */
         .glass-card {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(15px);
@@ -82,12 +78,11 @@
             transform: translateY(-5px);
         }
 
-        /* CONTAINER GIF YANG RESPONSif */
         .gif-container {
             margin-bottom: 20px;
             overflow: hidden;
             border-radius: 15px;
-            min-height: 200px; /* Mencegah layout lompat saat loading gambar */
+            min-height: 200px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -127,7 +122,6 @@
             position: relative;
         }
 
-        /* Desain Tombol 3D */
         button {
             font-size: 1.1rem;
             font-weight: 800;
@@ -159,7 +153,6 @@
             z-index: 100;
         }
 
-        /* TAMPILAN TOMBOL LANJUTAN */
         #btn-next {
             background-color: #4cd137;
             color: #fff;
@@ -180,12 +173,10 @@
             100% { transform: scale(1); }
         }
 
-        /* Pesan Sukses */
         .hidden {
             display: none !important;
         }
 
-        /* Animasi Masuk */
         @keyframes floatUpIn {
             0% { opacity: 0; transform: translateY(50px) scale(0.9); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -194,11 +185,14 @@
 </head>
 <body>
 
+    <audio id="bg-music" loop>
+        <source src="b.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="emoji-container"></div>
 
     <div class="glass-card" id="main-card">
         <div class="gif-container">
-            <!-- HALAMAN 1: Kucing Minta Maaf Nangis Memelas -->
             <img id="cat-gif" src="pp.png" alt="Cute cat crying">
         </div>
         
@@ -210,12 +204,24 @@
             <button id="btn-no" onmouseover="kabur()" onclick="kabur()">Gak!</button>
         </div>
 
-        <!-- Tombol Lanjut Cerita -->
         <button id="btn-next" class="hidden" onclick="lanjutCerita()">Lanjut Mau Cerita</button>
     </div>
 
     <script>
-        // --- BUAT EMOJI MELAYANG ---
+        const bgMusic = document.getElementById('bg-music');
+
+        // Trik Autoplay: Putar musik di interaksi pertama apa pun di layar (klik/sentuh)
+        function playAudioOnInteraction() {
+            bgMusic.play().catch(error => {
+                console.log("Autoplay dicegah browser, menunggu interaksi tombol.");
+            });
+            // Hapus listener setelah musik berhasil berjalan agar tidak trigger berulang
+            document.removeEventListener('click', playAudioOnInteraction);
+            document.removeEventListener('touchstart', playAudioOnInteraction);
+        }
+        document.addEventListener('click', playAudioOnInteraction);
+        document.addEventListener('touchstart', playAudioOnInteraction);
+
         function createFloatingEmoji() {
             const container = document.getElementById('emoji-container');
             const emojis = ['🥺', '🙏', '😭', '💔'];
@@ -235,7 +241,6 @@
 
         window.addEventListener('load', createFloatingEmoji);
 
-        // --- LOGIKA TOMBOL KABUR ---
         const btnNo = document.getElementById('btn-no');
         
         btnNo.addEventListener('touchstart', (e) => {
@@ -244,6 +249,9 @@
         });
 
         function kabur() {
+            // Memastikan musik jalan jika tombol 'Gak!' diarahkan kursor
+            bgMusic.play();
+            
             btnNo.style.position = 'fixed';
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
@@ -260,22 +268,19 @@
             btnNo.style.transform = `rotate(${randomRot}deg)`;
         }
 
-        // --- LOGIKA SAAT DIMA'AFKAN (HALAMAN 2) ---
+        // --- HALAMAN 2 ---
         function dimaafin() {
-            // HALAMAN 2: Otomatis ganti ke GIF Kucing Pelukan Senang Saling Sayang
+            // Pastikan musik menyala saat tombol diklik
+            bgMusic.play();
+            
             document.getElementById('cat-gif').src = "pp2.png";
             
-            // Ganti Teks Sambutan Sukses
             document.getElementById('title').innerText = "YAYYY! MAKASIHH! 🥰";
             document.getElementById('desc').innerText = "hehehe kakak baik dehh 🤞❤️";
             
-            // Hilangkan Tombol Pilihan (Iya/Gak)
             document.querySelector('.btn-container').classList.add('hidden');
-            
-            // Tampilkan Tombol Lanjut Cerita
             document.getElementById('btn-next').classList.remove('hidden');
             
-            // Ubah emoji background jadi lope-lope
             const floatingEmojis = document.querySelectorAll('.emoji-bg');
             floatingEmojis.forEach(el => {
                 el.innerText = '❤️';
@@ -284,7 +289,6 @@
                 el.style.animationDuration = '4s';
             });
 
-            // Efek Ledakan Confetti
             var duration = 3 * 1000;
             var end = Date.now() + duration;
 
@@ -310,15 +314,13 @@
             }());
         }
 
-        // --- LOGIKA TOMBOL LANJUTAN DITEKAN (HALAMAN 3) ---
+        // --- HALAMAN 3 ---
         function lanjutCerita() {
-            // HALAMAN 3: Otomatis ganti ke GIF Kucing Manja Ndusel-Ndusel dengerin cerita
             document.getElementById('cat-gif').src = "pp3.png";
 
             document.getElementById('title').innerText = "Aku Mau Cerita Nihh 🥰";
-            document.getElementById('desc').innerText = "kak, jujur aku nyaman sama kakak. aku suka dan sayang pake bgt (walaupun suka bikin nangis kk hh). aku tau ko kak emg sesayang dan sesuka itu sama aku, sampe2 masih bertahan hehe. aku cuma mau jalanin pelan-pelan dlu aja, kenal lebih jauh, tanpa harus buru-buru kak. semoga kakak ngerti ya :). maaf ya kak aku selalu nyakitin perasaan kakak , kalo ga dimaapin gapapa si emg jahat akunya wkwk. mwah ❤️ terimkicih - adek kesayangan kakak whahah ";
+            document.getElementById('desc').innerText = "kak, jujur aku nyaman sama kakak. aku suka dan sayang pake bgt (walaupun suka bikin nangis kk hh). aku tau ko kak emg sesayang dan sesuka itu sama aku, sampe2 masih bertahan hehe. kayanya aku belum mau pacaran dulu hehe, aku cuma mau jalanin pelan-pelan aja, kenal lebih jauh, tanpa harus buru-buru. semoga kakak ngerti ya :). maaf ya kak aku selalu nyakitin perasaan kakak , kalo ga dimaapin gapapa si emg jahat akunya wkwk. mwah ❤️";
             
-            // Hilangkan tombol setelah ditekan agar bersih
             document.getElementById('btn-next').classList.add('hidden');
         }
     </script>
